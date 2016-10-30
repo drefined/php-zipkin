@@ -35,12 +35,49 @@ $trace->record(
     [Annotation::generateServerSend()],
     [BinaryAnnotation::generateString('server.response', 200)]
 );
+```
 
+### Laravel integration (simple)
+
+Add middleware and service provider in proper locations.
+
+```php
+<?php // laravel-project/app/Http/Kernel.php
+
+namespace App\Http;
+
+use ...
+use Drefined\Zipkin\Instrumentation\Laravel\Middleware\EnableZipkinTracing;
+
+class Kernel extends HttpKernel
+{
+    ...
+    protected $middleware = [
+        ...
+        EnableZipkinTracing::class,
+    ];
+    ...
+}
+```
+
+```php
+<?php // laravel-project/config/app.php
+
+use Drefined\Zipkin\Instrumentation\Laravel\Providers\ZipkinTracingServiceProvider;
+
+return [
+    ...
+    'providers' => [
+        ...
+        ZipkinTracingServiceProvider::class,
+    ],
+    ...
+];
 ```
 
 ## Todo
 
-* Add Laravel integration
+* Add Complete Laravel integration (currently supports a simple implementation without app environment configuration)
 * Add Symfony integration
 * Add Redis wrapper
 * Add HTTP wrapper
