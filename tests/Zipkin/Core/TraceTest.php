@@ -14,16 +14,25 @@ class TraceTest extends \PHPUnit\Framework\TestCase
         $trace->setEndpoint(new Endpoint('127.0.0.1', 8080, 'test-trace'));
 
         $trace->createNewSpan('test-server-trace');
-        $trace->record([Annotation::generateServerRecv()], [BinaryAnnotation::generateString('server.request.uri', '/server')]);
+        $trace->record(
+            [Annotation::generateServerRecv()],
+            [BinaryAnnotation::generateString('server.request.uri', '/server')]
+        );
 
         // parent: test-server-trace
         $trace->createNewSpan('test-client-trace');
-        $trace->record([Annotation::generateClientSend()], [BinaryAnnotation::generateString('client.request.uri', '/client')]);
+        $trace->record(
+            [Annotation::generateClientSend()],
+            [BinaryAnnotation::generateString('client.request.uri', '/client')]
+        );
         sleep(1);
 
         // parent: test-client-trace
         $trace->createNewSpan('test-server-trace-2');
-        $trace->record([Annotation::generateServerRecv()], [BinaryAnnotation::generateString('server.request.uri', '/server2')]);
+        $trace->record(
+            [Annotation::generateServerRecv()],
+            [BinaryAnnotation::generateString('server.request.uri', '/server2')]
+        );
         sleep(2);
         $trace->record([Annotation::generateClientRecv()], [BinaryAnnotation::generateString('server.response', 200)]);
         $trace->popSpan();
@@ -33,7 +42,10 @@ class TraceTest extends \PHPUnit\Framework\TestCase
 
         // parent: test-server-trace
         $trace->createNewSpan('test-client-trace-2');
-        $trace->record([Annotation::generateClientSend()], [BinaryAnnotation::generateString('client.request.uri', '/client2')]);
+        $trace->record(
+            [Annotation::generateClientSend()],
+            [BinaryAnnotation::generateString('client.request.uri', '/client2')]
+        );
         sleep(1);
         $trace->record([Annotation::generateClientRecv()], [BinaryAnnotation::generateString('client.response', 200)]);
         $trace->popSpan();
@@ -43,7 +55,6 @@ class TraceTest extends \PHPUnit\Framework\TestCase
         $traceId = (string)$trace->getTraceId();
 
         echo "http://localhost:9411/api/v1/trace/{$traceId}";
-
         // TODO: Assert trace is the same from api call http://localhost:9411/api/v1/trace/{traceId}
     }
 }

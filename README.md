@@ -6,6 +6,30 @@ This is an unofficial PHP library for OpenZipkin.
 
 Incomplete, only has one transport with zero integrations. This library contains a very minimal implementation for just sending spans to zipkin.
 
+## Example usage
+
+```php
+<?php
+$client   = new \GuzzleHttp\Client();
+$logger   = new \Drefined\Zipkin\Transport\HTTPLogger($client);
+$tracer   = new \Drefined\Zipkin\Tracer($logger, 1.0, true);
+$endpoint = new \Drefined\Zipkin\Core\Endpoint('127.0.0.1', 8080, 'test-trace');
+$trace    = new \Drefined\Zipkin\Core\Trace($tracer, $endpoint);
+
+$trace->createNewSpan('test-server-trace');
+
+$trace->record(
+    [Annotation::generateServerRecv()],
+    [BinaryAnnotation::generateString('server.request.uri', '/server')]
+);
+
+$trace->record(
+    [Annotation::generateServerSend()],
+    [BinaryAnnotation::generateString('server.response', 200)]
+);
+
+```
+
 ## Todo
 
 * Add Laravel integration

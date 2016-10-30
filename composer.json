@@ -1,7 +1,9 @@
 {
-  "name": "drefined/zipkin-php",
-  "description": "Zipkin's PHP tracer library",
+  "name": "drefined/php-zipkin",
   "type": "library",
+  "description": "Zipkin's PHP tracer library",
+  "keywords": ["zipkin", "php", "tracing", "tracer"],
+  "homepage": "https://github.com/drefined/php-zipkin",
   "license": "MIT",
   "authors": [
     {
@@ -10,15 +12,13 @@
     }
   ],
   "autoload": {
-    "classmap": [
-      "gen-php/"
-    ],
     "psr-4": {
       "Drefined\\": "src/"
     }
   },
   "minimum-stability": "dev",
   "require": {
+    "php": "^7.0",
     "guzzlehttp/guzzle": "^6.2"
   },
   "require-dev": {
