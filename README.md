@@ -6,6 +6,14 @@ This is an unofficial PHP library for OpenZipkin.
 
 Incomplete, only has one transport with zero integrations. This library contains a very minimal implementation for just sending spans to zipkin.
 
+## Getting started
+
+The recommended way to install PHP-Zipkin is through [Composer](https://getcomposer.org/)
+
+```bash
+composer require drefined/php-zipkin
+```
+
 ## Example usage
 
 ```php
