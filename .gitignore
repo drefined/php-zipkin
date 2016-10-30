@@ -1,0 +1,5 @@
+.idea/
+gen-php/
+vendor/
+composer.phar
+phpunit.phar
