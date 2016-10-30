@@ -54,7 +54,7 @@ class EnableZipkinTracing
         $tracingService = $this->app->make(ZipkinTracingService::class);
 
         $endpoint = new Endpoint($ipAddress, $port, 'laravel-app');
-        $tracingService->createTrace(null, $endpoint, $sampled, true);
+        $tracingService->createTrace(null, $endpoint, $sampled, $debug);
 
         $trace = $tracingService->getTrace();
         $trace->createNewSpan($name, null, $spanId, $parentSpanId);
